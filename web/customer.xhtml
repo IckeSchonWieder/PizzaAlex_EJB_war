@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Customer</title>
+    </h:head>
+    <h:body>
+        <h2><h:outputText value="#{label.accHeader}" /></h2>
+        <h:outputText value="#{label.accAvailable}" />
+       
+        <h:form>
+            <h:selectOneMenu value="#{customerBean.selectedCustomer}"  converter="customerCon">  
+               <f:selectItem itemLabel="#{label.choose}" itemValue="" />  
+               <f:selectItems value="#{customerBean.customers}" var="c" 
+                              itemLabel="#{c.fullName()}" itemValue="#{c}"/>  
+            </h:selectOneMenu>
+            <h:commandButton value="OK" action="#{customerBean.setHasAcc(true)}"/>
+        </h:form>
+        
+        <hr/>
+        
+        <p>
+        <h:form rendered="#{not customerBean.hasAcc}">
+            <h:commandButton value="#{label.btnNew}" action="#{customerBean.newCust()}" />
+        </h:form>
+        </p>
+       
+        <h:form rendered="#{customerBean.hasAcc}">
+            <h:panelGrid columns="2" rendered="#{customerBean.hasAcc}">  
+
+                <h:outputLabel for="outFirst" value="#{label.firstname}" />
+                <h:outputText id="outFirst" value="#{customerBean.selectedCustomer.firstname}" />
+
+                <h:outputLabel for="outLast" value="#{label.lastname}" />
+                <h:outputText id="outLast" value="#{customerBean.selectedCustomer.lastname}" />
+
+                <h:outputLabel for="outStreet" value="#{label.street}" />
+                <h:outputText id="outStreet" value="#{customerBean.selectedCustomer.street}" />
+
+                <h:outputLabel for="outCity" value="#{label.city}" />
+                <h:outputText id="outCity" value="#{customerBean.selectedCustomer.city}" />
+
+            </h:panelGrid>  
+            <h:commandButton value="#{label.btnCheck}" 
+                             action="#{customerBean.checkOrder(orderBean.order)}" />
+        </h:form>
+        
+        
+    </h:body>
+</html>
+
