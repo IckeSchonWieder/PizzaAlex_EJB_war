@@ -31,6 +31,16 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>manager</from-outcome>
+            <to-view-id>/manager/manager.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cook</from-outcome>
+            <to-view-id>/cook/cook.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>check</from-outcome>
             <to-view-id>/checkOrder.xhtml</to-view-id>
             <redirect/>

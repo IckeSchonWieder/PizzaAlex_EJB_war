@@ -14,27 +14,35 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Hallo Manager</h1>
-        <h2>Content wurde wieder deaktiviert, da kein Sessionlistener integriert</h2>
         <h:outputText rendered="false" value="Aktive Sessions: " /> <br/>
    
+        <h:form>
+            <h:selectOneMenu value="#{customerBean.selectedCustomer}"  converter="customerCon">  
+               <f:selectItem itemLabel="#{label.choose}" itemValue="" />  
+               <f:selectItems value="#{customerBean.customers}" var="c" 
+                              itemLabel="#{c.fullName()}" itemValue="#{c}"/>  
+            </h:selectOneMenu>
+            <h:commandButton value="OK" action="#{customerBean.setHasAcc(true)}"/>
+        </h:form>
+        
+        <hr/>
+        
+        <h:panelGrid columns="2" rendered="#{customerBean.hasAcc}">  
+
+            <h:outputLabel for="outFirst" value="#{label.firstname}" />
+            <h:outputText id="outFirst" value="#{customerBean.selectedCustomer.firstname}" />
+
+            <h:outputLabel for="outLast" value="#{label.lastname}" />
+            <h:outputText id="outLast" value="#{customerBean.selectedCustomer.lastname}" />
+
+            <h:outputLabel for="outStreet" value="#{label.street}" />
+            <h:outputText id="outStreet" value="#{customerBean.selectedCustomer.street}" />
+
+            <h:outputLabel for="outCity" value="#{label.city}" />
+            <h:outputText id="outCity" value="#{customerBean.selectedCustomer.city}" />
+
+        </h:panelGrid>  
        
-        <h:dataTable rendered="false" value="#{sessionBean.sessList}" var="sess">
-            <h:column>
-                <f:facet name = "header">
-                    <h:outputText value="SessionID" />
-                </f:facet>  
-                <h:outputText value="#{sess.id}" />
-            </h:column>
-            <h:column>
-                <f:facet name = "header">
-                    <h:outputText value="Creation Time" />
-                </f:facet>  
-                <h:outputText value="#{sess.creationTime}">
-                    <f:convertDateTime locale="de" type="both"/>
-                </h:outputText>
-            </h:column>
-            
-        </h:dataTable>
         
         <br />
         <h:link outcome="start" value="#{label.index}"/>

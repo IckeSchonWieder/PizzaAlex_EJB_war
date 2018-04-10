@@ -9,7 +9,7 @@
         <h:form>
 
 
-            <h:outputText rendered="#{loginBean.loggedIn}" value="#{label.loggedIn += loginBean.role}" />
+            <h:outputText rendered="#{loginBean.loggedIn}" value="#{label.loggedIn += loginBean.user.role}" />
             <h:outputText rendered="#{not loginBean.loggedIn}" value="#{label.notLoggedIn}" />
             <br/>
 
@@ -23,7 +23,7 @@
 
                 </h:panelGrid> 
                 
-                <h:commandButton value="LogIn" action="#{loginBean.login(request)}" /> <br/>
+                <h:commandButton value="LogIn" action="#{loginBean.login()}" /> <br/>
                 <h:link outcome="start" value="#{label.index}"/>
             </p>
 

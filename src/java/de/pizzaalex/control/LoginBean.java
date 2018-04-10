@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginBean implements Serializable{
     private User user;
     private Boolean loggedIn;
-    private String role;
-
+    HttpServletRequest req;
     
+    @Inject
+    CustomerBean cb;
     
     public LoginBean() {
         user = new User();
@@ -47,37 +50,36 @@ public class LoginBean implements Serializable{
         this.loggedIn = loggedIn;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-    
-    public void settingRole(HttpServletRequest request) {
-        if (request.isUserInRole("customerRole")){
-            role = "customer";
-        } else if (request.isUserInRole("cookRole")) {
-            role = "cook";
-        } else if (request.isUserInRole("managerRole")) {
-            role = "manager";
+       
+    public void settingRole() {
+        if (req.isUserInRole("customerRole")){
+            user.setRole("customer");
+        } else if (req.isUserInRole("cookRole")) {
+            user.setRole("cook");
+        } else if (req.isUserInRole("managerRole")) {
+            user.setRole("manager");
         } else {
-            role = null; 
+            user.setRole(null); 
         }
     }
     
     
-    public String login(HttpServletRequest req){
-        System.out.println("Login: " +user.toString());
-        //HttpServletRequest req=(HttpServletRequest) FacesContext.getCurrentInstance()
-        //        .getExternalContext().getRequest();
+    public String login(){
+        req =(HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
         try {
             
             req.login(user.getUsername(), user.getPassword());
             loggedIn=true;
-            settingRole(req);
-            return "customer";
+            settingRole();
+            System.out.println("User eingeloggt: " + user.toString());
+            if (user.getRole().equals("customer")) {
+                cb.setSelectedCustomer(cb.getCustByUsername(user.getUsername()));
+            }
+          
+            System.out.println("Return: " + user.getRole());
+            // each user role will navigate to dedicated web page (navigation rule at faces config)
+            return user.getRole();
             
         } catch (ServletException ex) {
             loggedIn=false;
@@ -87,13 +89,13 @@ public class LoginBean implements Serializable{
         
     }
     
-    public void logout(HttpServletRequest req) {
-       // HttpServletRequest req=(HttpServletRequest) FacesContext.getCurrentInstance()
-         //       .getExternalContext().getRequest();
+    public void logout() {
+        req=(HttpServletRequest) FacesContext.getCurrentInstance()
+               .getExternalContext().getRequest();
         try {
             req.logout();
             loggedIn = false;
-            role = null;
+            req.getSession().invalidate();
         } catch (ServletException ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }

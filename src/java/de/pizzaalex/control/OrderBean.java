@@ -91,12 +91,5 @@ public class OrderBean extends LookUpData {
         return "finalize";
     }
     
-    public String backToIndex() {
-        HttpServletRequest req=(HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
-        
-        req.getSession().invalidate();
-        return "start";
-    }
-    
+   
 }

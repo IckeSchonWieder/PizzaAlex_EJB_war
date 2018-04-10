@@ -4,9 +4,9 @@ package de.pizzaalex.control;
 import de.pizzaalex.ejb.DataBeanRemote;
 import de.pizzaalex.model.Customer;
 import de.pizzaalex.model.Order;
-import java.io.Serializable;
 import java.util.ArrayList;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 import javax.inject.Named;
 
@@ -17,12 +17,14 @@ import javax.inject.Named;
 
 @SessionScoped
 @Named
-public class CustomerBean extends LookUpData implements Serializable {
+public class CustomerBean extends LookUpData {
     private Customer selectedCustomer;
     private boolean hasAcc;
     private DataBeanRemote dbr;
     private ArrayList<Customer> customers;
     
+    @Inject
+    LoginBean lb;
     
     public CustomerBean() {
         hasAcc = false;
@@ -64,28 +66,37 @@ public class CustomerBean extends LookUpData implements Serializable {
         for (Customer cus:customers) {
             if (cus.getId() == id) {
                 found = cus;
-                //System.out.println("Kunde gefunden: " + cus.id + " " + found.id);
+            } 
+        }
+        return found;
+    } 
+    
+    public Customer getCustByUsername(String username){
+        Customer found = null;
+        for (Customer cus:customers) {
+            if (cus.getUsername().equals(username.toLowerCase())) {
+                found = cus;
             } 
         }
         return found;
     }
     
+    
     public String newCust(){
         //selectedCustomer = new Customer();
         selectedCustomer = new Customer("Vorname", "Nachname", "Hier", "12345", "Landshut", "customer23");
-        selectedCustomer.setRole("customer");
         hasAcc = false;
         return "newCustomer";
     }
      
     
     public String storeCustomer() {
-        System.out.println(selectedCustomer.toString());
-        System.out.println(selectedCustomer.getUsername());
-        System.out.println(selectedCustomer.getPassword());
+       
         dbr.storeCustomer(selectedCustomer);
+        customers.add(selectedCustomer);
+        lb.setUser(selectedCustomer);
+        return lb.login();
         
-        return "customer";
     }
     
     
@@ -93,4 +104,11 @@ public class CustomerBean extends LookUpData implements Serializable {
         order.setCus(selectedCustomer);
         return "check";
     }
+    
+    public String backToStart() {
+        lb.logout();
+        return "start";
+    }
+    
+    
 }
