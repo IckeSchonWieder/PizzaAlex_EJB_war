@@ -10,15 +10,6 @@
     <h:body>
         <h1><h:outputText value="#{label.indexHeader}" /></h1>
         
-       
-        <h:link rendered="#{not loginBean.loggedIn}" outcome="login" value="#{label.logIn}" /> <br/>
-        
-        <h:form rendered="#{loginBean.loggedIn}">
-            <h:outputText value="#{label.loggedIn += loginBean.role}" /> <br />
-            <h:commandLink action="#{loginBean.logout(request)}" value="#{label.logOut}" /> <br />
-        </h:form>
-        <hr/>
-        
         
         <h2><h:outputText value="#{label.menuHeader}" /></h2>
         <h:form>
@@ -81,7 +72,7 @@
                 </h:column>
             </h:dataTable>
           
-          <p:commandButton action="customer" value="#{label.btnOrder}" />
+          <p:commandButton action="login" value="#{label.btnOrder}" />
           
         </h:form> 
         

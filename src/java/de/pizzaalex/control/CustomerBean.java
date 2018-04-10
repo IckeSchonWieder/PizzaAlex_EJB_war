@@ -71,22 +71,25 @@ public class CustomerBean extends LookUpData implements Serializable {
     }
     
     public String newCust(){
-        selectedCustomer = new Customer();
+        //selectedCustomer = new Customer();
+        selectedCustomer = new Customer("Vorname", "Nachname", "Hier", "12345", "Landshut", "customer23");
+        selectedCustomer.setRole("customer");
         hasAcc = false;
         return "newCustomer";
     }
      
     
-    public void storeCustomer(Customer cus) {
-        dbr.storeCustomer(cus);
+    public String storeCustomer() {
+        System.out.println(selectedCustomer.toString());
+        System.out.println(selectedCustomer.getUsername());
+        System.out.println(selectedCustomer.getPassword());
+        dbr.storeCustomer(selectedCustomer);
         
+        return "customer";
     }
     
     
     public String checkOrder(Order order){
-        if (!hasAcc) {
-            storeCustomer(selectedCustomer);
-        }
         order.setCus(selectedCustomer);
         return "check";
     }

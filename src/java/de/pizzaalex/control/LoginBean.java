@@ -77,13 +77,13 @@ public class LoginBean implements Serializable{
             req.login(user.getUsername(), user.getPassword());
             loggedIn=true;
             settingRole(req);
+            return "customer";
             
         } catch (ServletException ex) {
             loggedIn=false;
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
         }
-        
-        return "loginAs"+role;
         
     }
     

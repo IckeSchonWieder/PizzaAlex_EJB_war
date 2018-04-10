@@ -43,8 +43,20 @@ and open the template in the editor.
                              validator="myValidator"/>
                 <h:message for="inCity" class="error"/> 
                 
+                <h:outputLabel for="inUsername" value="#{label.username}:" />
+                <h:inputText id="inUsername" 
+                             value="#{customerBean.selectedCustomer.username}"
+                             validator="myValidator"/>
+                <h:message for="inUsername" class="error"/> 
+                
+                <h:outputLabel for="inPassword" value="#{label.password}:" />
+                <h:inputText id="inPassword" 
+                             value="#{customerBean.selectedCustomer.password}"
+                             validator="myValidator"/>
+                <h:message for="inPassword" class="error"/> 
+                
             </h:panelGrid>
-            <h:commandButton value="OK" action="#{customerBean.checkOrder(orderBean.order)}" />
+            <h:commandButton value="OK" action="#{customerBean.storeCustomer()}" />
         </h:form>
     </body>
 </html>

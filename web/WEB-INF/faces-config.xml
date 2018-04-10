@@ -51,22 +51,7 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>loginAscook</from-outcome>
-            <to-view-id>/cook/cook.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>loginAsmanager</from-outcome>
-            <to-view-id>/manager/manager.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>loginAscustomer</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case> 
-        <navigation-case>
-            <from-outcome>loginAsnull</from-outcome>
+            <from-outcome>error</from-outcome>
             <to-view-id>/error.xhtml</to-view-id>
             <redirect/>
         </navigation-case> 

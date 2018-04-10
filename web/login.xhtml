@@ -27,8 +27,11 @@
                 <h:link outcome="start" value="#{label.index}"/>
             </p>
 
-            <h:outputText value="Manager oder Cook verfügbar. 
-                          Customer führt zurück zur Startseite"/>
+            <hr/>
+            <h:form>
+                <h:commandButton value="#{label.btnNew}" action="#{customerBean.newCust()}" />
+            </h:form>
+       
         </h:form>
     </h:body>
 </html>

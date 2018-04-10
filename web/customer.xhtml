@@ -9,7 +9,15 @@
     <h:body>
         <h2><h:outputText value="#{label.accHeader}" /></h2>
         <h:outputText value="#{label.accAvailable}" />
-       
+        
+        <h:link rendered="#{not loginBean.loggedIn}" outcome="login" value="#{label.logIn}" /> <br/>
+        
+        <h:form rendered="#{loginBean.loggedIn}">
+            <h:outputText value="#{label.loggedIn += loginBean.role}" /> <br />
+        </h:form>
+        <hr/>
+        
+        
         <h:form>
             <h:selectOneMenu value="#{customerBean.selectedCustomer}"  converter="customerCon">  
                <f:selectItem itemLabel="#{label.choose}" itemValue="" />  
@@ -21,11 +29,6 @@
         
         <hr/>
         
-        <p>
-        <h:form rendered="#{not customerBean.hasAcc}">
-            <h:commandButton value="#{label.btnNew}" action="#{customerBean.newCust()}" />
-        </h:form>
-        </p>
        
         <h:form rendered="#{customerBean.hasAcc}">
             <h:panelGrid columns="2" rendered="#{customerBean.hasAcc}">  

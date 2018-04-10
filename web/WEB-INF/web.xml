@@ -51,6 +51,7 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
+        <realm-name>pizza-jdbc</realm-name>
         <form-login-config>
             <form-login-page>/newjsf.xhtml</form-login-page>
             <form-error-page>/error.xhtml</form-error-page>
