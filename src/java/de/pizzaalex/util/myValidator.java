@@ -5,6 +5,7 @@
  */
 package de.pizzaalex.util;
 
+import de.pizzaalex.control.CustomerBean;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 @FacesValidator("myValidator")
 public class myValidator implements Validator {
 
+    @Inject
+    CustomerBean cb;
+    
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         HttpServletRequest request=(HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -51,6 +56,17 @@ public class myValidator implements Validator {
             }
         }
         
+        if (component.getClientId().contains("inUsername")){
+             
+            if (value.toString().length() < 3) {
+                throw new ValidatorException(getMessage("nameFailLength", context));
+            }
+            
+            
+            if (cb.getCustByUsername(value.toString()) != null ){
+                throw new ValidatorException(getMessage("usernameExists", context));
+            }
+        }
              
         
     }

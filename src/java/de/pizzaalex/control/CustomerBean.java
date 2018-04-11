@@ -6,9 +6,11 @@ import de.pizzaalex.model.Customer;
 import de.pizzaalex.model.Order;
 import java.util.ArrayList;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -71,6 +73,7 @@ public class CustomerBean extends LookUpData {
         return found;
     } 
     
+    
     public Customer getCustByUsername(String username){
         Customer found = null;
         for (Customer cus:customers) {
@@ -91,8 +94,7 @@ public class CustomerBean extends LookUpData {
      
     
     public String storeCustomer() {
-       
-        dbr.storeCustomer(selectedCustomer);
+        selectedCustomer = dbr.storeCustomer(selectedCustomer);
         customers.add(selectedCustomer);
         lb.setUser(selectedCustomer);
         return lb.login();
@@ -106,7 +108,12 @@ public class CustomerBean extends LookUpData {
     }
     
     public String backToStart() {
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
+               .getExternalContext().getRequest();
         lb.logout();
+        
+        req.getSession().invalidate();
+        
         return "start";
     }
     

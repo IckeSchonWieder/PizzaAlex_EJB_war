@@ -77,7 +77,6 @@ public class LoginBean implements Serializable{
                 cb.setSelectedCustomer(cb.getCustByUsername(user.getUsername()));
             }
           
-            System.out.println("Return: " + user.getRole());
             // each user role will navigate to dedicated web page (navigation rule at faces config)
             return user.getRole();
             
@@ -95,7 +94,8 @@ public class LoginBean implements Serializable{
         try {
             req.logout();
             loggedIn = false;
-            req.getSession().invalidate();
+           // cb.setSelectedCustomer(selectedCustomer);
+            user = new User();
         } catch (ServletException ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
