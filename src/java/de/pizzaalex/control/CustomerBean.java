@@ -5,6 +5,7 @@ import de.pizzaalex.ejb.DataBeanRemote;
 import de.pizzaalex.model.Customer;
 import de.pizzaalex.model.Order;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -30,10 +31,14 @@ public class CustomerBean extends LookUpData {
     
     public CustomerBean() {
         hasAcc = false;
+    }
+   
+    
+    @PostConstruct
+    public void fillList() {
         dbr = lookupDataBeanRemote();
         customers = dbr.getCustomers();
     }
-   
     
     public Customer getSelectedCustomer() {
         return selectedCustomer;

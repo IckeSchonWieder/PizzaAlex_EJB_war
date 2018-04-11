@@ -69,10 +69,10 @@ public class LoginBean implements Serializable{
                 .getExternalContext().getRequest();
         try {
             
-            req.login(user.getUsername(), user.getPassword());
+            System.out.println("User eingeloggt: " + user.toString());
+            req.login(user.getUsername().toLowerCase(), user.getPassword());
             loggedIn=true;
             settingRole();
-            System.out.println("User eingeloggt: " + user.toString());
             if (user.getRole().equals("customer")) {
                 cb.setSelectedCustomer(cb.getCustByUsername(user.getUsername()));
             }

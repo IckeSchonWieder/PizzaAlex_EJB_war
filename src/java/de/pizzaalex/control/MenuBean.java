@@ -6,6 +6,7 @@ import de.pizzaalex.ejb.DataBeanRemote;
 import de.pizzaalex.model.Pizza;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
 
@@ -25,7 +26,11 @@ public class MenuBean extends LookUpData implements Serializable{
     
     
     public MenuBean() {
-        System.out.println("MenuBean Construct");
+        
+    }
+    
+    @PostConstruct
+    public void fillMenu(){
         menuList = dbr.getMenuList();
     }
     
