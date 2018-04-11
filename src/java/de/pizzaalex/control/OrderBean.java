@@ -24,6 +24,7 @@ public class OrderBean extends LookUpData {
     
 
     public OrderBean() {
+        System.out.println("OrderBean Construct");
         order = new Order();
     }
 

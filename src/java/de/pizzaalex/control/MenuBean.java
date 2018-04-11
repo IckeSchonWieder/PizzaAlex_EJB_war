@@ -25,6 +25,7 @@ public class MenuBean extends LookUpData implements Serializable{
     
     
     public MenuBean() {
+        System.out.println("MenuBean Construct");
         menuList = dbr.getMenuList();
     }
     
