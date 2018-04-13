@@ -53,13 +53,13 @@ public class LoginBean implements Serializable{
        
     public void settingRole() {
         if (req.isUserInRole("customerRole")){
-            user.setRole("customer");
+            user.setUserRole("customer");
         } else if (req.isUserInRole("cookRole")) {
-            user.setRole("cook");
+            user.setUserRole("cook");
         } else if (req.isUserInRole("managerRole")) {
-            user.setRole("manager");
+            user.setUserRole("manager");
         } else {
-            user.setRole(null); 
+            user.setUserRole(null); 
         }
     }
     
@@ -69,16 +69,16 @@ public class LoginBean implements Serializable{
                 .getExternalContext().getRequest();
         try {
             
-            System.out.println("User eingeloggt: " + user.toString());
             req.login(user.getUsername().toLowerCase(), user.getPassword());
             loggedIn=true;
             settingRole();
-            if (user.getRole().equals("customer")) {
+            if (user.getUserRole().equals("customer")) {
                 cb.setSelectedCustomer(cb.getCustByUsername(user.getUsername()));
             }
-          
+            System.out.println("User eingeloggt: " + user.getUsername() + " als " + user.getUserRole());
+            
             // each user role will navigate to dedicated web page (navigation rule at faces config)
-            return user.getRole();
+            return user.getUserRole();
             
         } catch (ServletException ex) {
             loggedIn=false;
